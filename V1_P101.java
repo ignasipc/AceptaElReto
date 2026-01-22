@@ -13,10 +13,12 @@ public class V1_P101 {
             PriorityQueue <Integer> colaPrioridades = new PriorityQueue <> (sqrn);
             int [][] matriz = new int[n][n];
 
+            int numero = 0;
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
-                    matriz[i][j] = in.nextInt();
-                    colaPrioridades.add(matriz[i][j]);
+                    numero = in.nextInt();
+                    matriz[i][j] = numero;
+                    colaPrioridades.add(numero);
                 }
             }
 
@@ -80,31 +82,21 @@ public class V1_P101 {
             if ((n % 2) != 0){ // impar
                 int sumaMitades = matriz[0][mitad] + matriz[mitad][0] + matriz[mitad][n-1] + matriz[n-1][mitad];
 
-                if (CM2 != sumaMitades){
+                if (CM2 != sumaMitades || (matriz[mitad][mitad] * 4) != CM2){
                     System.out.println("DIABOLICO");
                     return true;
                 }
-
-                if ((matriz[mitad][mitad] * 4) != CM2){
-                    System.out.println("DIABOLICO");
-                    return true;
-                }
-            }else{  //par
+            }else{ // par
                 int sumaMitades = matriz[0][mitad] + matriz[mitad][0] + matriz[mitad][n-1] + matriz[n-1][mitad]+
                         matriz[0][mitad-1] + matriz[mitad-1][0] + matriz[mitad-1][n-1] + matriz[n-1][mitad-1];
-
-                if (2*CM2 != sumaMitades){
-                    System.out.println("DIABOLICO");
-                    return true;
-                }
-
                 int centro = matriz[mitad][mitad] + matriz[mitad-1][mitad] + matriz[mitad][mitad-1] + matriz[mitad-1][mitad-1];
-                if (centro != CM2){
+
+                if (2*CM2 != sumaMitades || centro != CM2){
                     System.out.println("DIABOLICO");
                     return true;
                 }
-
             }
+
             System.out.println("ESOTERICO");
             return true;
         }
