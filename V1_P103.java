@@ -2,20 +2,22 @@ public class V1_P103 {
     static java.util.Scanner in;
 
     public static boolean casoDePrueba(){
+        // Obtenemos el grado del polinomio
         byte gradoPolinomio = in.nextByte();
         if (gradoPolinomio == 20) return false;
 
+        // Obtenemos los coeficientes en orden decreciente respecto al grado
         short [] coeficientes = new short [gradoPolinomio+1];
-
-        for (byte i = 0; i < gradoPolinomio+1; i++) {
+        for (short i = 0; i < coeficientes.length; i++) {
             coeficientes[i] = in.nextShort();   // El coeficiente es el número que precede a X. Ej: el coef. de 5x² es 5
         }
 
-        short n = in.nextShort();
+        // Obtenemos el número de rectángulos que queremos crear
+        int n = in.nextInt();
 
         float resultado = 0;
-        for (byte i = 0; i < gradoPolinomio; i++) {
-            resultado += (1 / (float) n) * funcion( i * (1 / (float) n), coeficientes );
+        for (int i = 0; i < n; i++) {
+            resultado += ((float) 1 / n) * funcion((float) i / n, coeficientes);
         }
 
         if (0.4999 <= resultado && resultado <= 0.5001){
@@ -30,13 +32,13 @@ public class V1_P103 {
 
     public static float funcion(float x, short [] coeficientes){
         float resultado = 0;
-        for (byte i = 0; i < coeficientes.length; i++) {
-            resultado += coeficientes[i] * (float)Math.pow(x,i);
+        for (short i = 0; i < coeficientes.length; i++) {
+            resultado += (float) (coeficientes[i] * Math.pow(x,coeficientes.length-(i+1)));
         }
-        if (resultado < 0){
+        if (resultado <= 0){
             return 0;
         }
-        if (resultado > 1){
+        if (resultado >= 1){
             return 1;
         }
         return resultado;
