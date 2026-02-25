@@ -16,31 +16,26 @@ public class V1_P103 {
         int n = in.nextInt();
 
         float resultado = 0;
-        for (int i = 0; i < n; i++) {
-            resultado += ((float) 1 / n) * funcion((float) i / n, coeficientes);
+        float invN = 1.0f / n;
+        for (float i = 0; i < n; i++) {
+            resultado += invN * funcion(i / n, coeficientes);
         }
 
-        if (0.4999 <= resultado && resultado <= 0.5001){
-            System.out.println("JUSTO");
-        } else if (0.4999 > resultado) {
-            System.out.println("ABEL");
-        } else {
-            System.out.println("CAIN");
-        }
+        if (0.4999 <= resultado && resultado <= 0.5001) System.out.println("JUSTO");
+        else if (0.4999 > resultado) System.out.println("ABEL");
+        else System.out.println("CAIN");
         return true;
     }
 
     public static float funcion(float x, short [] coeficientes){
         float resultado = 0;
-        for (short i = 0; i < coeficientes.length; i++) {
-            resultado += (float) (coeficientes[i] * Math.pow(x,coeficientes.length-(i+1)));
+        float xPower = 1.0f; // x^0 = 1
+        for (int i = coeficientes.length-1; i >= 0; i--) {
+            resultado += coeficientes[i] * xPower;
+            xPower *= x; // Multiplicamos por x para obtener la siguiente potencia
         }
-        if (resultado <= 0){
-            return 0;
-        }
-        if (resultado >= 1){
-            return 1;
-        }
+        if (resultado <= 0) return 0;
+        if (resultado >= 1) return 1;
         return resultado;
     }
 
