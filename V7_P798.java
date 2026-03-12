@@ -1,29 +1,36 @@
 public class V7_P798 {
     static java.util.Scanner in;
 
-    public static boolean casoDePrueba(){
-        byte primeraEntrada = in.nextByte();
-        if(primeraEntrada == 0) return false;
+    public static boolean casoDePrueba() {
+        int n = in.nextInt();
 
-        byte segundaEntrada;
-        StackWithQueues<Byte> stack = new StackWithQueues<Byte>();
+        if (n == 0) return false;
 
-        for (int i = 0; i < primeraEntrada; i++) {
-            segundaEntrada = in.nextByte();
-            stack.push(segundaEntrada);
-        }
+        StackWithQueues<Integer> estacion = new StackWithQueues<>();
 
-        StackWithQueues<Byte> stackGuardados = new StackWithQueues<Byte>();
-        primeraEntrada++;
+        int vagonEntrante = 1;
+        boolean posible = true;
 
-        for (int i = 1; i < primeraEntrada; i++) {
-            byte vagon = stack.top();
-            stack.pop();
+        for (int i = 0; i < n; i++) {
+            int vagonDeseado = in.nextInt();
 
-            if (vagon != i){
-                stackGuardados.push(vagon);
+            if (!posible) {
+                continue;
+            }
+
+            while (vagonEntrante <= n && (estacion.isEmpty() || estacion.top() != vagonDeseado)) {
+                estacion.push(vagonEntrante);
+                vagonEntrante++;
+            }
+
+            if (!estacion.isEmpty() && estacion.top() == vagonDeseado) {
+                estacion.pop();
+            } else {
+                posible = false;
             }
         }
+
+        System.out.println(posible ? "SI" : "NO");
 
         return true;
     }
