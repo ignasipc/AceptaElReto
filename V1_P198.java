@@ -31,7 +31,7 @@ public class V1_P198 {
         int n = linea.length();
 
         // Creamos la pila y la cola, ambos de tamaño n
-        V1_P198.ArrayStack<Integer> pila = new V1_P198.ArrayStack<>(n);
+        LinkedListStack<Integer> pila = new LinkedListStack<>();
         V1_P198.ArrayQueue<Integer> cola = new V1_P198.ArrayQueue<>(n);
 
         // Creamos booleanos para guardar si ya ha realizado una división por 0, para no malgastar recursos de cálculo
@@ -129,6 +129,11 @@ public class V1_P198 {
         private class Node {
             private E elem;
             private Node next;
+
+            public Node(E elem, Node next) {
+                this.elem = elem;
+                this.next = next;
+            }
         }
 
         private Node top;
