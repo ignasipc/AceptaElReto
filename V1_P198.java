@@ -32,7 +32,7 @@ public class V1_P198 {
 
         // Creamos la pila y la cola, ambos de tamaño n
         LinkedListStack<Integer> pila = new LinkedListStack<>();
-        V1_P198.ArrayQueue<Integer> cola = new V1_P198.ArrayQueue<>(n);
+        LinkedListQueue<Integer> cola = new LinkedListQueue<>();
 
         // Creamos booleanos para guardar si ya ha realizado una división por 0, para no malgastar recursos de cálculo
         // y evitar posibles errores
@@ -125,6 +125,10 @@ public class V1_P198 {
         return true;
     }
 
+    /**
+     * Pila implementada mediante una lista enlazada
+     * @param <E> Tipo de dato que guardará la pila
+     */
     public static class LinkedListStack<E> {
         private class Node {
             private E elem;
@@ -188,6 +192,97 @@ public class V1_P198 {
          */
         public void empty() {
             top = null;
+        }
+    }
+
+    /**
+     * Cola implementada mediante una lista enlazada
+     *
+     * @param <E> Tipo de dato que guardará la cola
+     */
+    public static class LinkedListQueue<E> {
+        private class Node {
+            private E elem;
+            Node next;
+
+            public Node(E elem, Node next) {
+                this.elem = elem;
+                this.next = next;
+            }
+        }
+        private Node p, q;
+
+        /**
+         * Prepara la lista para almacenar elementos
+         */
+        public LinkedListQueue(){
+            p = null;
+            q = null;
+        }
+
+        /**
+         * Añade el elemento a la cola
+         *
+         * @param item elemento a insertar en la cola
+         * @return <code>True</code> si se ha insertado con éxito
+         */
+        public boolean put(E item) {
+            try {
+                Node r = new Node(item, null);
+                if (p == null) {
+                    p = r;
+                    q = r;
+                } else {
+                    p.next = r;
+                    p = r;
+                }
+                return true;
+            } catch (OutOfMemoryError e) {
+                return false;
+            }
+        }
+
+        /**
+         * Elimina el primer elemento de la cola
+         *
+         * @return <code>True</code> si se ha eliminado con éxito
+         */
+        public boolean removeFirst() {
+            if (q == null) {
+                return false;
+            } else {
+                q = q.next;
+                if (q == null) {
+                    p = null;
+                }
+                return true;
+            }
+        }
+
+        /**
+         * @return el primer elemento de la cola, si había, sino <code>null</code>
+         */
+        public E getFirst() {
+            if (q == null) {
+                return null;
+            } else {
+                return q.elem;
+            }
+        }
+
+        /**
+         * @return <code>True</code> si la cola está vacía
+         */
+        public boolean isEmpty() {
+            return q == null;
+        }
+
+        /**
+         * Vacía la cola
+         */
+        public void empty() {
+            p = null;
+            q = null;
         }
     }
 }
