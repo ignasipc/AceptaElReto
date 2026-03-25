@@ -130,50 +130,59 @@ public class V1_P198 {
             private E elem;
             private Node next;
         }
+
         private Node top;
 
         /**
          * Prepara la lista para almacenar elementos
          */
-        public LinkedListStack(){
-
+        public LinkedListStack() {
+            top = null;
         }
 
         /**
          * Añade el elemento a la pila
+         *
          * @param item elemento a insertar en la pila
          * @return <code>True</code> si se ha insertado con éxito
          */
         public boolean push(E item) {
-
+            top = new Node(item, top);
+            return true;
         }
 
         /**
          * Elimina un elemento de la pila
+         *
          * @return <code>True</code> si se ha eliminado con éxito
          */
         public boolean pop() {
-
+            if (!isEmpty()) {
+                top = top.next;
+                return true;
+            } else return false;
         }
 
         /**
          * @return el elemento de la cima de la pila, si había, sino <code>null</code>
          */
         public E top() {
-
+            if (!isEmpty()) return top.elem;
+            else return null;
         }
 
         /**
          * @return <code>True</code> si la pila está vacía
          */
         public boolean isEmpty() {
-
+            return top == null;
         }
 
         /**
          * Vacía la pila
          */
         public void empty() {
-
+            top = null;
         }
+    }
 }
