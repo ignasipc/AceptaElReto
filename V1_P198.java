@@ -125,147 +125,55 @@ public class V1_P198 {
         return true;
     }
 
-    /**
-     * Implementación de pila vista en clase.
-     * @param <E> tipo de dato que manejará la pila
-     */
-    public static class ArrayStack <E> {
-        private E[] array;
-        private int n;
+    public static class LinkedListStack<E> {
+        private class Node {
+            private E elem;
+            private Node next;
+        }
+        private Node top;
 
         /**
-         * Prepara el array para almacenar los elementos en la pila
-         * @param max Tamaño máximo de elementos de la pila
+         * Prepara la lista para almacenar elementos
          */
-        public ArrayStack(int max) {
-            this.n = 0;
-            this.array = (E[]) new Object[max];
+        public LinkedListStack(){
+
         }
 
         /**
-         * Inserta el elemento en la pila
-         * @param item El elemento que se guardará en la pila
-         * @return <code>True</code> si se inserta correctamente
+         * Añade el elemento a la pila
+         * @param item elemento a insertar en la pila
+         * @return <code>True</code> si se ha insertado con éxito
          */
         public boolean push(E item) {
-            if (n < array.length) {
-                array[n] = item;
-                n++;
-                return true;
-            } else {
-                return false;
-            }
+
         }
 
         /**
          * Elimina un elemento de la pila
-         * @return <code>True</code> si se elimina el elemento exitosamente
+         * @return <code>True</code> si se ha eliminado con éxito
          */
         public boolean pop() {
-            if (!isEmpty()) {
-                n--;
-                return true;
-            } else {
-                return false;
-            }
+
         }
 
         /**
-         * @return El elemento en la cima de la pila, <code>Null</code> si no hay
+         * @return el elemento de la cima de la pila, si había, sino <code>null</code>
          */
-        public E top(){
-            if (!isEmpty()) {
-                return array[n-1];
-            } else {
-                return null;
-            }
+        public E top() {
+
         }
 
         /**
          * @return <code>True</code> si la pila está vacía
          */
         public boolean isEmpty() {
-            return n == 0;
+
         }
 
         /**
          * Vacía la pila
          */
-        public void empty(){
-            this.n = 0;
-        }
-    }
-
-    /**
-     * Implementación de cola vista en clase.
-     * @param <E> tipo de dato que manejará la pila
-     */
-    public static class ArrayQueue <E> {
-        private E[] array;
-        private int n, p, q;
-
-        /**
-         * Prepara el array para almacenar los elementos en la cola
-         * @param max Tamaño máximo de elementos en la cola
-         */
-        public ArrayQueue(int max){
-            array = (E[]) new Object[max];
-            n = 0;
-            p = 0;
-            q = 0;
-        }
-
-        /**
-         * Inserta el elemento en la cola
-         * @param item Elemento insertado en la cola
-         * @return <code>True</code> si se ha insertado exitosamente
-         */
-        public boolean put(E item) {
-            if (n < array.length){
-                array[p] = item;
-                p = (p + 1) % array.length;
-                n++;
-                return true;
-            }
-            else return false;
-        }
-
-        /**
-         * Eliminamos de la cola el primer elemento
-         * @return <code>True</code> si se ha eliminado correctamente
-         */
-        public boolean removeFirst() {
-            if (n != 0){
-                q = (q + 1) % array.length;
-                n--;
-                return true;
-            }
-            else return false;
-        }
-
-        /**
-         * Obtenemos el primer elemento de la cola
-         * @return El primer elemento insertado y no eliminado de la cola, <code>null</code> si no quedan elementos
-         */
-        public E getFirst() {
-            if (n != 0) return array[q];
-            else return null;
-        }
-
-        /**
-         * @return <code>True</code> si la cola está vacía
-         */
-        public boolean isEmpty() {
-            return n == 0;
-        }
-
-        /**
-         * Vacía la cola
-         */
         public void empty() {
-            n = 0;
-            p = 0;
-            q = 0;
+
         }
-    }
 }
