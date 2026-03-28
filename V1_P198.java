@@ -7,8 +7,8 @@ public class V1_P198 {
     static BufferedReader in;
 
     /**
-     * Método principal donde se leerá la entrada entera para dar una salida por línea. Cabe destacar que se utiliza el
-     * BufferedReader, ya que es mucho más eficiente que no el Scanner.
+     * Método principal donde se leerá la entrada entera para dar una salida por cada línea. Cabe destacar que se utiliza
+     * el BufferedReader, ya que es mucho más eficiente que no el Scanner.
      */
     public static void main(String[] args) throws IOException {
         in = new BufferedReader(new InputStreamReader(System.in));
@@ -18,7 +18,7 @@ public class V1_P198 {
     /**
      * Método que lee una sola línea de la entrada e imprime en la salida estándar la comparación de los cálculos de las
      * notaciones dadas.
-     * @return <code>True</code> en el caso de existir más líneas que leer, <code>False</code> por el contrario
+     * @return <code>True</code> en el caso de existir más líneas que leer, si no será <code>False</code>
      */
     private static boolean casoDePrueba() throws IOException {
         // Leemos la línea entera
@@ -27,26 +27,29 @@ public class V1_P198 {
         // Si no existe, hemos acabado todas las entradas, por tanto, devolvemos False y termina el programa
         if (linea == null) return false;
 
-        // Como máximo, tendremos tantos objetos en la pila/cola como número de caracteres tengamos en la línea
-        int n = linea.length();
-
-        // Creamos la pila y la cola, ambos de tamaño n
+        // Creamos la pila y la cola, ambos de tamaño variable (LinkedList), ya que solo utilizará la memoria ¡NECESARIA!
+        // Si usáramos Array, cabe la posibilidad de que nos queden slots del array totalmente vacíos, así ¡malgastamos memoria!
         LinkedListStack<Integer> pila = new LinkedListStack<>();
         LinkedListQueue<Integer> cola = new LinkedListQueue<>();
 
-        // Creamos booleanos para guardar si ya ha realizado una división por 0, para no malgastar recursos de cálculo
-        // y evitar posibles errores
+        // Creamos booleanos para guardar si ya ha realizado una división por 0, de esta manera no malgastaremos recursos
+        // de cálculo y evitaremos posibles errores de cálculo
         boolean errorPila = false, errorCola = false;
 
         // Creamos dos enteros para guardar los operandos que extraeremos de la pila y la cola cuando tengamos que operar
         int primerOperando, segundoOperando;
 
-        // Iteramos por todos los carácteres de la línea leida anteriormente
+        // Como máximo, tendremos tantos objetos en la pila/cola como número de caracteres tengamos en la línea
+        // (solo usado para el siguiente bucle for)
+        int n = linea.length();
+
+        // Iteramos por todos los carácteres de la línea leída al inicio del método
         for (int i = 0; i < n; i++) {
+            // Convertimos el carácter seleccionado a número entero (Unicode)
             int c = linea.charAt(i);
             switch (c) {
-                // Al encontrar un operador obtenemos los operandos, operamos y guardamos en la estructura de datos pertinente
-                // (Teniendo en cuenta que el primer valor que se extrae es el segundo operando)
+                // Al encontrar un operador obtenemos los operandos, operamos y guardamos en la estructura de datos
+                // pertinente (Teniendo en cuenta que el primer valor que se extrae es el segundo operando)
                 case '+':
                 case '-':
                 case '*':
@@ -96,8 +99,10 @@ public class V1_P198 {
                     }
                     break;
 
-                // En el caso de que no sea un operador, añadimos los operandos que nos vamos encontrando en la pila y la cola
+                // En el caso de que no sea un operador, se trata de un número, por tanto, añadimos los operandos que
+                // nos vamos encontrando en la pila y la cola
                 default:
+                    // Obtenemos el entero a guardar mediante la resta del código Unicode del carácter '0'
                     if (!errorPila) pila.push(c - '0');
                     if (!errorCola) cola.put(c - '0');
                     break;
@@ -106,18 +111,18 @@ public class V1_P198 {
 
         // Obtenemos la salida deseada dependiendo del resultado calculado y lo mostramos en la salida estándar
         if (errorPila && errorCola) {
-            System.out.println("ERROR = ERROR");
+            System.out.println("ERROR = ERROR");    // Caso: ambos dan 'ERROR'
         } else if (!errorPila && !errorCola) {
             if (Objects.equals(pila.top(), cola.getFirst())) {
-                System.out.println(pila.top() + " = " + cola.getFirst());
+                System.out.println(pila.top() + " = " + cola.getFirst());   // Caso: ambos tienen resultados iguales
             } else {
-                System.out.println(pila.top() + " != " + cola.getFirst());
+                System.out.println(pila.top() + " != " + cola.getFirst());  // Caso: tienen resultados distintos
             }
         } else {
             if (errorPila) {
-                System.out.println("ERROR != " + cola.getFirst());
+                System.out.println("ERROR != " + cola.getFirst());  // Caso: El primero da 'ERROR' y el segundo algún resultado
             } else {
-                System.out.println(pila.top() + " != ERROR");
+                System.out.println(pila.top() + " != ERROR");   // Caso: El primero da algún resultado y el segundo da 'ERROR'
             }
         }
 
@@ -185,13 +190,6 @@ public class V1_P198 {
          */
         public boolean isEmpty() {
             return top == null;
-        }
-
-        /**
-         * Vacía la pila
-         */
-        public void empty() {
-            top = null;
         }
     }
 
@@ -268,21 +266,6 @@ public class V1_P198 {
             } else {
                 return q.elem;
             }
-        }
-
-        /**
-         * @return <code>True</code> si la cola está vacía
-         */
-        public boolean isEmpty() {
-            return q == null;
-        }
-
-        /**
-         * Vacía la cola
-         */
-        public void empty() {
-            p = null;
-            q = null;
         }
     }
 }
